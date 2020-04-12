@@ -32,41 +32,63 @@ def main(locations, labels, geo_vector, **kwargs):
 
 if __name__ == '__main__':
 
-    # """ decide the best k for each month """
+    """ decide the best k for each month """
+    # year = 2020
     # epa_obj = LosAngelesEPA2020
-    # for year in [2020]:
-    #     for month in range(1, 13):
-    #         month_str = str(month).rjust(2, '0')
-    #         next_month_str = str(month % 12 + 1).rjust(2, '0')
-    #         next_year = year if month != 12 else year + 1
-    #         start_time = f'{year}-{month_str}-01'
-    #         end_time = f'{next_year}-{next_month_str}-01'
-    #         epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
-    #         clustering.cluster_main(epa_air_vector, task='get_best_k')
+    # for month in range(4, 5):
+    #     month_str = str(month).rjust(2, '0')
+    #     next_month_str = str(month % 12 + 1).rjust(2, '0')
+    #     next_year = year if month != 12 else year + 1
+    #     start_time = f'{year}-{month_str}-01'
+    #     end_time = f'{next_year}-{next_month_str}-01'
+    #     epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
+    #     clustering.cluster_main(epa_air_vector, task='get_best_k')
 
-    """ compute feature importance """
+    """ decide the best k for a given month """
+    # year = 2020
+    # epa_obj = LosAngelesEPA2020
+    # month = 4
+    # month_str = str(month).rjust(2, '0')
+    # start_time = f'{year}-{month_str}-01'
+    # end_time = f'{year}-{month_str}-13'
+    # epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
+    # clustering.cluster_main(epa_air_vector, task='get_best_k')
+
+    """ compute feature importance for each month """
     n_clusters_2018 = {1: 3, 2: 3, 3: 3, 4: 4, 5: 4, 6: 4,
                        7: 5, 8: 4, 9: 6, 10: 6, 11: 6, 12: 6}
     n_clusters_2019 = {1: 3, 2: 3, 3: 5, 4: 4, 5: 4, 6: 4,
                        7: 5, 8: 5, 9: 6, 10: 6, 11: 6, 12: 6}
-    n_clusters_2020 = {1: 5, 2: 5, 3: 4}
+    n_clusters_2020 = {1: 5, 2: 5, 3: 4, 4: 4}
 
-    year = 2019
-    epa_obj = LosAngelesEPA2019
-    n_clusters = n_clusters_2019
+    epa_obj = LosAngelesEPA2020
+    n_clusters = n_clusters_2020
     epa_loc_obj = LosAngelesEPASensorLocations
     epa_geo_obj = LosAngelesEpaGeoFeature
     _, epa_geo_vector = data_loader.load_geo_data(epa_geo_obj, loc_type='station_id', loc_obj=epa_loc_obj)
 
-    for month in range(1, 13):
-        month_str = str(month).rjust(2, '0')
-        next_month_str = str(month % 12 + 1).rjust(2, '0')
-        next_year = year if month != 12 else year + 1
-        start_time = f'{year}-{month_str}-01'
-        end_time = f'{next_year}-{next_month_str}-01'
-        model_file = f'data/models/{year}-{month_str}-01.json'
+    # year = 2020
+    # for month in range(1, 13):
+    #     month_str = str(month).rjust(2, '0')
+    #     next_month_str = str(month % 12 + 1).rjust(2, '0')
+    #     next_year = year if month != 12 else year + 1
+    #     start_time = f'{year}-{month_str}-01'
+    #     end_time = f'{next_year}-{next_month_str}-01'
+    #     model_file = f'data/models/{year}-{month_str}-01.json'
+    #
+    #     epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
+    #     labels = clustering.cluster_main(epa_air_vector, n_clusters=n_clusters[month])
+    #
+    #     main(list(epa_air_vector.columns), labels, epa_geo_vector, model_file=model_file)
 
-        epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
-        labels = clustering.cluster_main(epa_air_vector, n_clusters=n_clusters[month])
+    """ compute feature importance a given month """
+    year = 2020
+    month = 4
+    month_str = str(month).rjust(2, '0')
+    start_time = f'{year}-{month_str}-01'
+    end_time = f'{year}-{month_str}-13'
+    model_file = f'data/models/{year}-{month_str}-01.json'
 
-        main(list(epa_air_vector.columns), labels, epa_geo_vector, model_file=model_file)
+    epa_air_vector = data_loader.load_air_data(epa_obj, start_time, end_time)
+    labels = clustering.cluster_main(epa_air_vector, n_clusters=n_clusters[month])
+    main(list(epa_air_vector.columns), labels, epa_geo_vector, model_file=model_file)
