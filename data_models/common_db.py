@@ -4,8 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-PSQL_CONN_URI = 'postgresql+psycopg2://{usr}:{pwd}@jonsnow.usc.edu/air_quality_dev' \
-    .format(usr='yijun', pwd='m\\tC7;cc')
+PSQL_CONN_URI = 'postgresql+psycopg2://{usr}:{pwd}@{server}/air_quality_dev' \
+    .format(usr='', pwd='')
 
 engine = create_engine(PSQL_CONN_URI, echo=False)
 
