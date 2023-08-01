@@ -16,7 +16,7 @@ Base = declarative_base()
 session = Session()
 
 
-MG_CONN_URI = "mongodb://jon:snow@jonsnow.usc.edu:65533/jonsnow"
+MG_CONN_URI = "mongodb://"
 
 
 def write_mongodb(t, document, collection_name):
